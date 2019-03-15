@@ -8,16 +8,11 @@
 # without any warranty.
 
 import pytest
-import tempfile
-import shutil
 import re
-import paramiko
 
 from unittest import mock
 
 from qatrfm.environment import TerraformEnv
-from qatrfm.domain import Domain
-from qatrfm.utils.libutils import execute_bash_cmd
 
 pytest.TFVARS = {"var1=val1", "var2=val2", "var3=val3"}
 pytest.FILENAME = 'file.tf'
@@ -49,7 +44,7 @@ class TestTerraformEnv(object):
         assert isinstance(mocked_TerraformEnv, TerraformEnv)
         assert mocked_TerraformEnv.net_octet == 0
         assert re.match(
-            '(-var \'var\d=val\d\' ){3}', mocked_TerraformEnv.tf_vars)
+            r'(-var \'var\d=val\d\' ){3}', mocked_TerraformEnv.tf_vars)
         assert mocked_TerraformEnv.tf_file is None
         assert mocked_TerraformEnv.snapshots is False
 
